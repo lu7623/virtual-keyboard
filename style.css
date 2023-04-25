@@ -1,0 +1,68 @@
+.main-container {
+    margin: 0 auto;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#text {
+    margin-bottom: 20px;
+}
+
+.keyboard {
+    width: 100%;
+    height: 250px;
+    background-color: bisque;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between ;
+    padding: 20px;
+}
+
+.keyboard__row {
+display: flex;
+justify-content: space-between;
+}
+
+.key {
+    background-color: aquamarine;
+    height: 40px;
+    min-width: 40px;
+    border: black 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.key_special {
+    background-color: violet;
+    padding: 0 5px;
+}
+
+.space {
+    width: 360px;
+}
+
+.shift-left {
+    width: 110px;
+}
+
+.enter {
+    width: 100px;
+}
+
+.shift-right {
+    padding: 0;
+}
+
+.key_arrow {
+    background-color:cornflowerblue;
+}
+ .keyboard__description {
+    font-family: Arial, Helvetica, sans-serif;
+ }
