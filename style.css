@@ -37,6 +37,12 @@ justify-content: space-between;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    transition: all 200ms;
+}
+
+.key:hover {
+    background-color: darkgoldenrod;
 }
 
 .key_special {
@@ -44,11 +50,21 @@ justify-content: space-between;
     padding: 0 5px;
 }
 
+.key_special:hover {
+    background-color: darkmagenta;
+}
+
 .space {
     width: 360px;
 }
 
-.shift-left {
+.active {
+    background-color: bisque;
+    border-radius: 20px;
+    transition: all 200ms;
+}
+
+.shiftleft {
     width: 110px;
 }
 
@@ -56,12 +72,13 @@ justify-content: space-between;
     width: 100px;
 }
 
-.shift-right {
+.shiftright {
     padding: 0;
 }
 
 .key_arrow {
     background-color:cornflowerblue;
+    padding: 0;
 }
  .keyboard__description {
     font-family: Arial, Helvetica, sans-serif;

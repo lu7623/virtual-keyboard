@@ -40,32 +40,32 @@ function specialKeysClassAdd (keyName, key) {
         key.classList.add("key_special");
        }
        if (keyName == "alt-left") {
-        key.classList.add("alt-left");
+        key.classList.add("altleft");
         key.classList.add("key_special");
         key.innerText = "alt";
        }
        if (keyName == "alt-right") {
-        key.classList.add("alt-right");
+        key.classList.add("altright");
         key.classList.add("key_special");
         key.innerText = "alt";
        }
        if (keyName == "ctrl-left") {
-        key.classList.add("ctrl-left");
+        key.classList.add("controlleft");
         key.classList.add("key_special");
         key.innerText = "ctrl";
        }
        if (keyName == "ctrl-right") {
-        key.classList.add("ctrl-right");
+        key.classList.add("controlright");
         key.classList.add("key_special");
         key.innerText = "ctrl";
        }
        if (keyName == "shift-left") {
-        key.classList.add("shift-left");
+        key.classList.add("shiftleft");
         key.classList.add("key_special");
         key.innerText = "shift";
        }
        if (keyName == "shift-right") {
-        key.classList.add("shift-right");
+        key.classList.add("shiftright");
         key.classList.add("key_special");
         key.innerText = "shift";
        }
@@ -74,7 +74,7 @@ function specialKeysClassAdd (keyName, key) {
         key.classList.add("key_special");
        }
        if (keyName == "win") {
-        key.classList.add("win");
+        key.classList.add("metaleft");
         key.classList.add("key_special");
        }
        if (keyName == "backspace") {
@@ -82,22 +82,26 @@ function specialKeysClassAdd (keyName, key) {
         key.classList.add("key_special");
        }
        if (keyName == "up") {
-        key.classList.add("up");
+        key.classList.add("arrowup");
+        key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
        }
        if (keyName == "left") {
-        key.classList.add("left");
+        key.classList.add("arrowleft");
+        key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
        }
        if (keyName == "right") {
-        key.classList.add("right");
+        key.classList.add("arrowright");
+        key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
        }
        if (keyName == "down") {
-        key.classList.add("down");
+        key.classList.add("arrowdown");
+        key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
        }
@@ -106,7 +110,7 @@ function specialKeysClassAdd (keyName, key) {
         key.classList.add("key_special");
        }
        if (keyName == "del") {
-        key.classList.add("del");
+        key.classList.add("delete");
         key.classList.add("key_special");
        }
 }
@@ -116,7 +120,7 @@ async function getKeysEn() {
     const keys = "keys.json";
     const res = await fetch(keys);
     const data = await res.json();
-    for (let j=0; j<6; j++) {
+    for (let j=0; j<5; j++) {
         let currentRow = rows[j];
     for (let i=0; i<data[1][j].length; i++) {
        let key = document.createElement("div");
@@ -133,7 +137,7 @@ async function getKeysEn() {
     const keys = "keys.json";
     const res = await fetch(keys);
     const data = await res.json();
-    for (let j=0; j<6; j++) {
+    for (let j=0; j<5; j++) {
         let currentRow = rows[j];
     for (let i=0; i<data[0][j].length; i++) {
        let key = document.createElement("div");
@@ -146,7 +150,6 @@ async function getKeysEn() {
 }
   }
 
-
   //switch language
 
 let language = "en";
@@ -157,3 +160,35 @@ else getKeysEn();
  }
 
 languageSwitch ();
+
+
+//input events
+
+
+input.addEventListener('keydown', function(event) {
+    const keys = document.querySelectorAll(".key");
+    const secialKeys = document.querySelectorAll(".key_special");
+	console.log(event.code);
+    if (event.code == 'Tab') {
+        event.preventDefault();
+    }
+for (let i=0; i<keys.length; i++) {
+    if (event.key.toLowerCase() == keys[i].innerText && !keys[i].classList.contains("key_special")){
+        keys[i].classList.add("active");
+    }
+}
+for (let i=0; i<secialKeys.length; i++) {
+    if (secialKeys[i].classList.contains(event.code.toLowerCase())) {
+        secialKeys[i].classList.add("active");
+    }
+}
+});
+
+input.addEventListener('keyup', function(event) {
+    const keys = document.querySelectorAll(".key");
+	console.log(event.code);
+for (let i=0; i<keys.length; i++) {
+        keys[i].classList.remove("active");
+    }
+
+});
