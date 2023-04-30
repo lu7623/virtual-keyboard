@@ -10,8 +10,8 @@ title.innerText = "RSS Виртуальная клавитура";
 mainContainer.append(title);
 const input = document.createElement("textarea");
 input.id = "text";
-input.setAttribute("rows", 10);
-input.setAttribute("cols", 125);
+input.setAttribute("rows", 12);
+input.setAttribute("cols", 100);
 mainContainer.append(input);
 const keyboard = document.createElement("div");
 mainContainer.append(keyboard);
@@ -86,24 +86,40 @@ function specialKeysClassAdd (keyName, key) {
         key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
+        let arrowsign = document.createElement('i');
+        arrowsign.classList.add('fa-solid');
+        arrowsign.classList.add('fa-arrow-up');
+        key.append(arrowsign);
        }
        if (keyName == "left") {
         key.classList.add("arrowleft");
         key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
+        let arrowsign = document.createElement('i');
+        arrowsign.classList.add('fa-solid');
+        arrowsign.classList.add('fa-arrow-left');
+        key.append(arrowsign);
        }
        if (keyName == "right") {
         key.classList.add("arrowright");
         key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
+        let arrowsign = document.createElement('i');
+        arrowsign.classList.add('fa-solid');
+        arrowsign.classList.add('fa-arrow-right');
+        key.append(arrowsign);
        }
        if (keyName == "down") {
         key.classList.add("arrowdown");
         key.classList.add("key_special");
         key.classList.add("key_arrow");
         key.innerText = "";
+        let arrowsign = document.createElement('i');
+        arrowsign.classList.add('fa-solid');
+        arrowsign.classList.add('fa-arrow-down');
+        key.append(arrowsign);
        }
        if (keyName == "enter") {
         key.classList.add("enter");
@@ -122,6 +138,7 @@ async function getKeysEn() {
     const data = await res.json();
     for (let j=0; j<5; j++) {
         let currentRow = rows[j];
+        currentRow.replaceChildren();
     for (let i=0; i<data[1][j].length; i++) {
        let key = document.createElement("div");
        let keyName = data[1][j][i];
@@ -139,27 +156,56 @@ async function getKeysEn() {
     const data = await res.json();
     for (let j=0; j<5; j++) {
         let currentRow = rows[j];
+     currentRow.replaceChildren();
     for (let i=0; i<data[0][j].length; i++) {
-       let key = document.createElement("div");
-       key.innerText = data[0][j][i];
-       key.classList.add("key");
-       currentRow.append(key);
-       let keyName = data[1][j][i];
-       specialKeysClassAdd (keyName, key);
+        let key = document.createElement("div");
+        let keyName = data[0][j][i];
+        key.innerText = data[0][j][i];
+        key.classList.add("key");
+        currentRow.append(key);
+        specialKeysClassAdd (keyName, key);
     }
 }
   }
 
   //switch language
 
-let language = "en";
+let language;
 
- function languageSwitch () {
+ function languageSet () {
 if (language == "ru") { getKeysRu();}
-else getKeysEn();
+if (language == "en") { getKeysEn();}
  }
 
-languageSwitch ();
+ function languageSwitch () {
+    if (language == "ru") { 
+        language = "en";
+        
+        getKeysEn();}
+   else if (language == "en") { 
+        language = 'ru';
+        getKeysRu();}
+        console.log(language);
+     }
+    
+    
+
+function setLocalStorage() {    
+    localStorage.setItem("userlanguage", language);
+  }
+  window.addEventListener("beforeunload", setLocalStorage);
+  
+  function getLocalStorage() {
+    if (localStorage.getItem("userlanguage")) {
+      language = localStorage.getItem("userlanguage");
+    }
+   else {language = "en";}
+    }
+    
+  window.addEventListener('load', function(){
+    getLocalStorage();
+    languageSet ();
+  });
 
 
 //input events
@@ -168,9 +214,12 @@ languageSwitch ();
 input.addEventListener('keydown', function(event) {
     const keys = document.querySelectorAll(".key");
     const secialKeys = document.querySelectorAll(".key_special");
-	console.log(event.code);
+	console.log(event);
     if (event.code == 'Tab') {
         event.preventDefault();
+    }
+    if (event.code == 'ShiftLeft' && event.ctrlKey == true) {
+        languageSwitch();
     }
 for (let i=0; i<keys.length; i++) {
     if (event.key.toLowerCase() == keys[i].innerText && !keys[i].classList.contains("key_special")){

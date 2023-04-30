@@ -1,6 +1,6 @@
 .main-container {
     margin: 0 auto;
-    width: 900px;
+    width: 700px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,6 +8,7 @@
 
 .title {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #14471E;
 }
 
 #text {
@@ -16,70 +17,74 @@
 
 .keyboard {
     width: 100%;
-    height: 250px;
-    background-color: bisque;
+    height: 230px;
+    background-color: #8ba897;
     display: flex;
     flex-direction: column;
-    justify-content: space-between ;
+    gap: 5px;
     padding: 20px;
 }
 
 .keyboard__row {
 display: flex;
-justify-content: space-between;
+justify-content: center;
+gap: 5px;
 }
 
 .key {
-    background-color: aquamarine;
+    background-color: #68904D;
     height: 40px;
     min-width: 40px;
-    border: black 1px solid;
+    border:  #C8D2D1 1px solid;
+    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     transition: all 200ms;
+    color:  #C8D2D1;;
 }
 
 .key:hover {
-    background-color: darkgoldenrod;
+    background-color: #14471E;
 }
 
 .key_special {
-    background-color: violet;
-    padding: 0 5px;
+    background-color: #EE9B01;
+ 
 }
 
 .key_special:hover {
-    background-color: darkmagenta;
+    background-color: #DA6A00;
 }
 
 .space {
-    width: 360px;
+    width: 320px;
 }
 
 .active {
-    background-color: bisque;
-    border-radius: 20px;
+    background-color: #e0c9a7;
+    border-radius: 10px;
     transition: all 200ms;
 }
 
 .shiftleft {
-    width: 110px;
+    width: 134px;
 }
 
 .enter {
-    width: 100px;
+    width: 94px;
 }
 
-.shiftright {
-    padding: 0;
-}
-
-.key_arrow {
-    background-color:cornflowerblue;
-    padding: 0;
-}
  .keyboard__description {
     font-family: Arial, Helvetica, sans-serif;
+    color: #DA6A00;
+ }
+
+ .capslock {
+    width: 80px;
+ }
+
+ .backspace {
+width: 86px;
  }
