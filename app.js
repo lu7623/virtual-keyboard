@@ -118,6 +118,10 @@ function specialKeysClassAdd(keyName, key) {
     key.innerText = "Del";
     key.classList.add("key_special");
   }
+  if (keyName == "lang") {
+    key.innerText = language;
+    key.classList.add("key_special");
+  }
 }
 
 async function getKeysEn() {
@@ -137,6 +141,7 @@ async function getKeysEn() {
       specialKeysClassAdd(keyName, key);
     }
   }
+
 }
 
 async function getKeysRu() {
@@ -156,6 +161,7 @@ async function getKeysRu() {
       specialKeysClassAdd(keyName, key);
     }
   }
+
 }
 
 //switch language
@@ -163,11 +169,14 @@ async function getKeysRu() {
 let language;
 
 function languageSet() {
+  
   if (language == "ru") {
     getKeysRu();
+    
   }
   if (language == "en") {
     getKeysEn();
+   
   }
 }
 
@@ -199,70 +208,119 @@ window.addEventListener("load", function () {
   languageSet();
 });
 
-//input events
+//input keyboard events
 
 let string = "";
 input.addEventListener("keydown", function (event) {
-  if (
-    !event.code == "Enter" ||
-    !event.code == "ArrowUp" ||
-    !event.code == "ArrowDown" ||
-    !event.code == "ArrowRight" ||
-    !event.code == "ArrowLeft" ||
-    !event.code == "Delete" ||
-    !event.code == "Backspace" ||
-    !!event.code == "Space"
-  ) {
-    event.preventDefault();
-  }
+
+  
   const keys = document.querySelectorAll(".key");
-  const secialKeys = document.querySelectorAll(".key_special");
   const capslock = document.querySelector(".CapsLock");
-  console.log(event);
-  if (event.code == "Tab") {
-    event.preventDefault();
-  }
+  
   if (event.code == "ShiftLeft" && event.ctrlKey == true) {
     languageSwitch();
+    event.preventDefault();
   }
   if (event.code == "CapsLock") {
+    event.preventDefault();
     capslock.classList.toggle("caps");
   }
+  if (event.code == "Tab") {
+    event.preventDefault();
+
+  }
   for (let i = 0; i < keys.length; i++) {
+
+    console.log(language);
     if (keys[i].classList.contains(`${event.code}`)) {
       if (!keys[i].classList.contains("key_special")) {
+        event.preventDefault();
         if (!capslock.classList.contains("caps")) {
+            console.log( string);
           string = string + keys[i].innerText;
-          input.innerText = string;
+          input.value = string;
+          
         } else {
           string = string + keys[i].innerText.toUpperCase();
-          input.innerText = string;
+          input.value = string;
         }
         input.focus();
         input.selectionStart = input.value.length;
       } else {
         if (keys[i].classList.contains("Space")) {
           string = string + " ";
-          input.innerText = string;
+          input.value = string;
           input.focus();
           input.selectionStart = input.value.length;
         }
+        else if (keys[i].classList.contains("Backspace")) {
+            string = string.slice(0,-1);
+            input.value = string;
+            input.focus();
+            input.selectionStart = input.value.length;
+          }
       }
 
       keys[i].classList.add("active");
-    }
-  }
-  for (let i = 0; i < secialKeys.length; i++) {
-    if (secialKeys[i].classList.contains(event.code.toLowerCase())) {
-      secialKeys[i].classList.add("active");
     }
   }
 });
 
 input.addEventListener("keyup", function (event) {
   const keys = document.querySelectorAll(".key");
-  console.log(event.code);
+  
   for (let i = 0; i < keys.length; i++) {
     keys[i].classList.remove("active");
+   
   }
 });
+
+//input events by mouse
+
+keyboard.addEventListener("mousedown", function (event) {
+    input.value = input.innerText;
+    const capslock = document.querySelector(".CapsLock");
+    if (event.target.classList.contains("key")){
+    event.target.classList.add("active");
+    if (!event.target.classList.contains("key_special")) {
+        if (!capslock.classList.contains("caps")) {
+    string = string + event.target.innerText;
+          input.value = string;
+    }
+ else {
+    let letter = event.target.innerText;
+    console.log(letter);
+    string = string + letter.toUpperCase();
+          input.value = string;
+}
+} else {
+    if (event.target.classList.contains("Space")) {
+        string = string + ' ';
+        input.value = string;
+    }
+    else if (event.target.classList.contains("Backspace")) {
+        string = string.slice(0,-1);
+        input.value = string;
+    }
+    else if (event.target.classList.contains("CapsLock")) {
+        capslock.classList.toggle('caps');
+    }
+    else if (event.target.classList.contains("Enter")) {
+        string = string + '\n';
+        input.value = string;
+    }
+    else if (event.target.classList.contains("Lang")) {
+        input.value = string;
+        languageSwitch();
+    }
+}
+}
+
+  });
+  
+  keyboard.addEventListener("mouseup", function (event) {
+    event.target.classList.remove("active");
+    input.focus();
+        input.selectionStart = input.value.length;
+  });
+  

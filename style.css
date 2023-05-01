@@ -13,6 +13,8 @@
 
 #text {
     margin-bottom: 20px;
+    border: #14471E 3px solid;
+    border-radius: 10px;
 }
 
 .keyboard {
@@ -49,6 +51,10 @@ gap: 5px;
     background-color: #14471E;
 }
 
+.key:active {
+        background-color: #e0c9a7;
+}
+
 .key_special {
     background-color: #EE9B01;
  
@@ -58,6 +64,10 @@ gap: 5px;
     background-color: #DA6A00;
 }
 
+.key_special:active {
+    background-color: #e0c9a7;
+}
+
 .Space {
     width: 320px;
 }
@@ -65,11 +75,11 @@ gap: 5px;
 .active {
     background-color: #e0c9a7;
     border-radius: 10px;
-    transition: all 200ms;
+    transition: all 300ms;
 }
 
 .ShiftLeft {
-    width: 134px;
+    width: 87px;
 }
 
 .Enter {
@@ -87,4 +97,9 @@ gap: 5px;
 
  .Backspace {
 width: 88px;
+ }
+
+ .Lang {
+    background-color: #DA6A00;
+    color: aliceblue;
  }
