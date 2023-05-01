@@ -58,7 +58,7 @@ gap: 5px;
     background-color: #DA6A00;
 }
 
-.space {
+.Space {
     width: 320px;
 }
 
@@ -68,11 +68,11 @@ gap: 5px;
     transition: all 200ms;
 }
 
-.shiftleft {
+.ShiftLeft {
     width: 134px;
 }
 
-.enter {
+.Enter {
     width: 94px;
 }
 
@@ -81,10 +81,10 @@ gap: 5px;
     color: #DA6A00;
  }
 
- .capslock {
+ .CapsLock {
     width: 80px;
  }
 
- .backspace {
+ .Backspace {
 width: 88px;
  }
