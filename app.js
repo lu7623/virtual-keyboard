@@ -212,14 +212,12 @@ window.addEventListener("load", function () {
 
 let string = "";
 input.addEventListener("keydown", function (event) {
-
-  
   const keys = document.querySelectorAll(".key");
   const capslock = document.querySelector(".CapsLock");
-  
   if (event.code == "ShiftLeft" && event.ctrlKey == true) {
-    languageSwitch();
     event.preventDefault();
+    languageSwitch();
+    
   }
   if (event.code == "CapsLock") {
     event.preventDefault();
@@ -227,11 +225,9 @@ input.addEventListener("keydown", function (event) {
   }
   if (event.code == "Tab") {
     event.preventDefault();
-
   }
   for (let i = 0; i < keys.length; i++) {
-
-    console.log(language);
+languageSet();
     if (keys[i].classList.contains(`${event.code}`)) {
       if (!keys[i].classList.contains("key_special")) {
         event.preventDefault();
