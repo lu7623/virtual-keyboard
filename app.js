@@ -17,10 +17,12 @@ const keyboard = document.createElement("div");
 mainContainer.append(keyboard);
 keyboard.classList.add("keyboard");
 const rows = [];
-for (let i = 0; i < 5; i++) {
+let i=0;
+while (i<5) {
   rows[i] = document.createElement("div");
   rows[i].classList.add("keyboard__row");
   keyboard.append(rows[i]);
+  i = i+1;
 }
 const descrition = document.createElement("p");
 descrition.innerText =
@@ -124,42 +126,35 @@ function specialKeysClassAdd(keyName, key) {
   }
 }
 
-async function getKeysEn() {
-  const keys = "keys.json";
+async function getKeys(n) {
+    const keys = "keys.json";
   const res = await fetch(keys);
   const data = await res.json();
-  for (let j = 0; j < 5; j++) {
-    let currentRow = rows[j];
+  let j=0;
+  rows.forEach((row) => {
+    let currentRow =row;
     currentRow.replaceChildren();
-    for (let i = 0; i < data[1][j].length; i++) {
+    let i=0;
+    while ( i < data[n][j].length) {
       let key = document.createElement("div");
-      let keyName = data[1][j][i].key;
-      key.innerText = data[1][j][i].key;
+      let keyName = data[n][j][i].key;
+      key.innerText = data[n][j][i].key;
       key.classList.add("key");
-      key.classList.add(`${data[1][j][i].code}`);
+      key.classList.add(`${data[n][j][i].code}`);
       currentRow.append(key);
       specialKeysClassAdd(keyName, key);
+      i= i+1;
     }
-  }
+    j = j+1;
+  }) 
+}
+
+async function getKeysEn() {
+    getKeys(1);
 }
 
 async function getKeysRu() {
-  const keys = "keys.json";
-  const res = await fetch(keys);
-  const data = await res.json();
-  for (let j = 0; j < 5; j++) {
-    let currentRow = rows[j];
-    currentRow.replaceChildren();
-    for (let i = 0; i < data[0][j].length; i++) {
-      let key = document.createElement("div");
-      let keyName = data[0][j][i].key;
-      key.innerText = data[0][j][i].key;
-      key.classList.add("key");
-      key.classList.add(`${data[1][j][i].code}`);
-      currentRow.append(key);
-      specialKeysClassAdd(keyName, key);
-    }
-  }
+    getKeys(0);
 }
 
 //switch language
@@ -209,6 +204,7 @@ let string = "";
 let caps = false;
 
 input.addEventListener("keydown", function (event) {
+    console.log(input.selectionStart);
   const keys = document.querySelectorAll(".key");
   if (event.code == "ShiftLeft" && event.ctrlKey == true) {
     event.preventDefault();
@@ -224,29 +220,28 @@ input.addEventListener("keydown", function (event) {
     event.preventDefault();
     input.value = string;
   }
-  for (let i = 0; i < keys.length; i++) {
-    if (keys[i].classList.contains(`${event.code}`)) {
-      keys[i].classList.add("active");
-      if (!keys[i].classList.contains("key_special")) {
+ keys.forEach((key) => {
+    if (key.classList.contains(`${event.code}`)) {
+      key.classList.add("active");
+      if (!key.classList.contains("key_special")) {
         event.preventDefault();
-        if (caps == true) {
-          let letter = keys[i].innerText;
-          console.log(letter);
+        if (caps == true || event.shiftKey == true) {
+          let letter = key.innerText;
           string = string + letter.toUpperCase();
           input.value = string;
         } else {
-          string = string + keys[i].innerText;
+          string = string + key.innerText;
           input.value = string;
         }
         input.focus();
         input.selectionStart = input.value.length;
       } else {
-        if (keys[i].classList.contains("Space")) {
+        if (key.classList.contains("Space")) {
           string = string + " ";
           input.value = string;
           input.focus();
           input.selectionStart = input.value.length;
-        } else if (keys[i].classList.contains("Backspace")) {
+        } else if (key.classList.contains("Backspace")) {
           string = string.slice(0, -1);
           input.value = string;
           input.focus();
@@ -254,7 +249,7 @@ input.addEventListener("keydown", function (event) {
         }
       }
     }
-  }
+  } ) 
 });
 
 input.addEventListener("keyup", function () {
@@ -293,7 +288,8 @@ keyboard.addEventListener("mousedown", function (event) {
       } else if (event.target.classList.contains("Lang")) {
         input.value = string;
         languageSwitch();
-      }
+      } else input.value = string;
+
     }
   }
 });
