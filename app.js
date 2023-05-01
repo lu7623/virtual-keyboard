@@ -229,9 +229,9 @@ input.addEventListener("keydown", function (event) {
       keys[i].classList.add("active");
       if (!keys[i].classList.contains("key_special")) {
         event.preventDefault();
-        if (caps == true) {
+        if (caps == true || event.shiftKey == true) {
+            console.log(event);
           let letter = keys[i].innerText;
-          console.log(letter);
           string = string + letter.toUpperCase();
           input.value = string;
         } else {
