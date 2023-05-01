@@ -10,7 +10,7 @@ title.innerText = "RSS Виртуальная клавитура";
 mainContainer.append(title);
 const input = document.createElement("textarea");
 input.id = "text";
-input.setAttribute("rows", 12);
+input.setAttribute("rows", 10);
 input.setAttribute("cols", 100);
 mainContainer.append(input);
 const keyboard = document.createElement("div");
@@ -35,49 +35,49 @@ function specialKeysClassAdd (keyName, key) {
         key.classList.add("key_special");
         key.innerText = "";
        }
-       if (keyName == "tab") {
+       if (keyName == "Tab") {
         key.classList.add("tab");
         key.classList.add("key_special");
        }
        if (keyName == "alt-left") {
         key.classList.add("altleft");
         key.classList.add("key_special");
-        key.innerText = "alt";
+        key.innerText = "Alt";
        }
        if (keyName == "alt-right") {
         key.classList.add("altright");
         key.classList.add("key_special");
-        key.innerText = "alt";
+        key.innerText = "Alt";
        }
        if (keyName == "ctrl-left") {
         key.classList.add("controlleft");
         key.classList.add("key_special");
-        key.innerText = "ctrl";
+        key.innerText = "Ctrl";
        }
        if (keyName == "ctrl-right") {
         key.classList.add("controlright");
         key.classList.add("key_special");
-        key.innerText = "ctrl";
+        key.innerText = "Ctrl";
        }
        if (keyName == "shift-left") {
         key.classList.add("shiftleft");
         key.classList.add("key_special");
-        key.innerText = "shift";
+        key.innerText = "Shift";
        }
        if (keyName == "shift-right") {
         key.classList.add("shiftright");
         key.classList.add("key_special");
-        key.innerText = "shift";
+        key.innerText = "Shift";
        }
-       if (keyName == "capslock") {
+       if (keyName == "CapsLock") {
         key.classList.add("capslock");
         key.classList.add("key_special");
        }
-       if (keyName == "win") {
+       if (keyName == "Win") {
         key.classList.add("metaleft");
         key.classList.add("key_special");
        }
-       if (keyName == "backspace") {
+       if (keyName == "Backspace") {
         key.classList.add("backspace");
         key.classList.add("key_special");
        }
@@ -121,12 +121,13 @@ function specialKeysClassAdd (keyName, key) {
         arrowsign.classList.add('fa-arrow-down');
         key.append(arrowsign);
        }
-       if (keyName == "enter") {
+       if (keyName == "Enter") {
         key.classList.add("enter");
         key.classList.add("key_special");
        }
-       if (keyName == "del") {
+       if (keyName == "delete") {
         key.classList.add("delete");
+        key.innerText = "Del";
         key.classList.add("key_special");
        }
 }
@@ -141,8 +142,8 @@ async function getKeysEn() {
         currentRow.replaceChildren();
     for (let i=0; i<data[1][j].length; i++) {
        let key = document.createElement("div");
-       let keyName = data[1][j][i];
-       key.innerText = data[1][j][i];
+       let keyName = data[1][j][i].key;
+       key.innerText = data[1][j][i].key;
        key.classList.add("key");
        currentRow.append(key);
        specialKeysClassAdd (keyName, key);
@@ -159,8 +160,8 @@ async function getKeysEn() {
      currentRow.replaceChildren();
     for (let i=0; i<data[0][j].length; i++) {
         let key = document.createElement("div");
-        let keyName = data[0][j][i];
-        key.innerText = data[0][j][i];
+        let keyName = data[0][j][i].key;
+        key.innerText = data[0][j][i].key;
         key.classList.add("key");
         currentRow.append(key);
         specialKeysClassAdd (keyName, key);
