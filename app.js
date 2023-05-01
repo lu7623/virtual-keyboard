@@ -141,7 +141,6 @@ async function getKeysEn() {
       specialKeysClassAdd(keyName, key);
     }
   }
-
 }
 
 async function getKeysRu() {
@@ -161,7 +160,6 @@ async function getKeysRu() {
       specialKeysClassAdd(keyName, key);
     }
   }
-
 }
 
 //switch language
@@ -169,14 +167,11 @@ async function getKeysRu() {
 let language;
 
 function languageSet() {
-  
   if (language == "ru") {
     getKeysRu();
-    
   }
   if (language == "en") {
     getKeysEn();
-   
   }
 }
 
@@ -211,33 +206,36 @@ window.addEventListener("load", function () {
 //input keyboard events
 
 let string = "";
+let caps = false;
+
 input.addEventListener("keydown", function (event) {
   const keys = document.querySelectorAll(".key");
-  const capslock = document.querySelector(".CapsLock");
   if (event.code == "ShiftLeft" && event.ctrlKey == true) {
     event.preventDefault();
     languageSwitch();
-    
+    input.value = string;
   }
   if (event.code == "CapsLock") {
     event.preventDefault();
-    capslock.classList.toggle("caps");
+    caps = !caps;
+    input.value = string;
   }
   if (event.code == "Tab") {
     event.preventDefault();
+    input.value = string;
   }
   for (let i = 0; i < keys.length; i++) {
-languageSet();
     if (keys[i].classList.contains(`${event.code}`)) {
+      keys[i].classList.add("active");
       if (!keys[i].classList.contains("key_special")) {
         event.preventDefault();
-        if (!capslock.classList.contains("caps")) {
-            console.log( string);
-          string = string + keys[i].innerText;
+        if (caps == true) {
+          let letter = keys[i].innerText;
+          console.log(letter);
+          string = string + letter.toUpperCase();
           input.value = string;
-          
         } else {
-          string = string + keys[i].innerText.toUpperCase();
+          string = string + keys[i].innerText;
           input.value = string;
         }
         input.focus();
@@ -248,75 +246,60 @@ languageSet();
           input.value = string;
           input.focus();
           input.selectionStart = input.value.length;
+        } else if (keys[i].classList.contains("Backspace")) {
+          string = string.slice(0, -1);
+          input.value = string;
+          input.focus();
+          input.selectionStart = input.value.length;
         }
-        else if (keys[i].classList.contains("Backspace")) {
-            string = string.slice(0,-1);
-            input.value = string;
-            input.focus();
-            input.selectionStart = input.value.length;
-          }
       }
-
-      keys[i].classList.add("active");
     }
   }
 });
 
-input.addEventListener("keyup", function (event) {
+input.addEventListener("keyup", function () {
   const keys = document.querySelectorAll(".key");
-  
-  for (let i = 0; i < keys.length; i++) {
-    keys[i].classList.remove("active");
-   
-  }
+  keys.forEach((key) => key.classList.remove("active"));
 });
 
 //input events by mouse
 
 keyboard.addEventListener("mousedown", function (event) {
-    input.value = input.innerText;
-    const capslock = document.querySelector(".CapsLock");
-    if (event.target.classList.contains("key")){
+  input.value = input.innerText;
+  if (event.target.classList.contains("key")) {
     event.target.classList.add("active");
     if (!event.target.classList.contains("key_special")) {
-        if (!capslock.classList.contains("caps")) {
-    string = string + event.target.innerText;
-          input.value = string;
-    }
- else {
-    let letter = event.target.innerText;
-    console.log(letter);
-    string = string + letter.toUpperCase();
-          input.value = string;
-}
-} else {
-    if (event.target.classList.contains("Space")) {
-        string = string + ' ';
+      if (caps == false) {
+        string = string + event.target.innerText;
         input.value = string;
-    }
-    else if (event.target.classList.contains("Backspace")) {
-        string = string.slice(0,-1);
+      } else {
+        let letter = event.target.innerText;
+        string = string + letter.toUpperCase();
         input.value = string;
-    }
-    else if (event.target.classList.contains("CapsLock")) {
-        capslock.classList.toggle('caps');
-    }
-    else if (event.target.classList.contains("Enter")) {
-        string = string + '\n';
+      }
+    } else {
+      if (event.target.classList.contains("Space")) {
+        string = string + " ";
         input.value = string;
-    }
-    else if (event.target.classList.contains("Lang")) {
+      } else if (event.target.classList.contains("Backspace")) {
+        string = string.slice(0, -1);
+        input.value = string;
+      } else if (event.target.classList.contains("CapsLock")) {
+        caps = !caps;
+        input.value = string;
+      } else if (event.target.classList.contains("Enter")) {
+        string = string + "\n";
+        input.value = string;
+      } else if (event.target.classList.contains("Lang")) {
         input.value = string;
         languageSwitch();
+      }
     }
-}
-}
+  }
+});
 
-  });
-  
-  keyboard.addEventListener("mouseup", function (event) {
-    event.target.classList.remove("active");
-    input.focus();
-        input.selectionStart = input.value.length;
-  });
-  
+keyboard.addEventListener("mouseup", function (event) {
+  event.target.classList.remove("active");
+  input.focus();
+  input.selectionStart = input.value.length;
+});
