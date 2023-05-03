@@ -293,8 +293,9 @@ keyboard.addEventListener('mousedown', (event) => {
       string += '   ';
       input.value = string;
       languageSwitch();
-    } else input.value = string;
+    } 
   }
+  else input.value = string;
 });
 
 keyboard.addEventListener('mouseup', (event) => {
